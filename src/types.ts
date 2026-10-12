@@ -6,13 +6,12 @@ export interface Kpi {
     note?: string;
 }
 
-export type LaunchStatus = "Go" | "TBD" | "Success";
-
 export interface Launch {
-    id: number;
+    id: string;
     name: string;
     agency: string;
     rocket: string;
     pad: string;
-    status: LaunchStatus;
+    status: string;
+    net: string;
 }

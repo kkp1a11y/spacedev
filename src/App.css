@@ -42,7 +42,17 @@ select {
     border: 1px solid var(--border-color);
     border-radius: 6px;
     padding: 4px 8px;
+    cursor: pointer;
 }
-
+select:hover {
+    border-color: var(--primary-color);
+}
 table { width: 100%; margin-top: 12px; border-collapse: collapse; }
 th, td { text-align: left; padding: 6px; border-bottom: 1px solid var(--border-color); }
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+th.sortable:hover {
+    color: var(--primary-color);
+}
