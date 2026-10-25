@@ -1,0 +1,37 @@
+.app {
+    min-height: 100vh;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.app__main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+.app__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+.section {
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 8px;
+    background: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+.section h3 {
+    margin-top: 0;
+}

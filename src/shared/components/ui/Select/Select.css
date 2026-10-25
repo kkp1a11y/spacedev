@@ -1,0 +1,24 @@
+.select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.select__label {
+    opacity: 0.7;
+}
+
+.select__field {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    height: 36px;
+}
+
+.select__field:hover {
+    border-color: var(--primary-color);
+}

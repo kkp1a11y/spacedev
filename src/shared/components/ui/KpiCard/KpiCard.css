@@ -1,0 +1,25 @@
+.kpi-card {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--secondary-color);
+}
+
+.kpi-card__title {
+    opacity: 0.7;
+    margin: 0;
+}
+
+.kpi-card__value {
+    margin: 4px 0;
+}
+
+.kpi-card__change {
+    color: var(--success-color);
+    margin-right: 8px;
+}
+
+.kpi-card__note {
+    opacity: 0.7;
+    font-size: 14px;
+}

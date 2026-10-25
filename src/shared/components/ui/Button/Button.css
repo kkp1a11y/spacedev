@@ -1,0 +1,17 @@
+.button {
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: var(--primary-hover);
+}
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
