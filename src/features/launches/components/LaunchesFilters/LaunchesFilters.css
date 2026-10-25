@@ -1,0 +1,23 @@
+.launches-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.launches-filters .counter {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.launches-filters .counter__value {
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.launches-filters > .button {
+    height: 36px;
+    margin-bottom: 2px;
+    margin-left: auto;
+}

@@ -1,0 +1,15 @@
+.counter {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--secondary-color);
+}
+
+.counter__title {
+    opacity: 0.7;
+    margin: 0;
+}
+
+.counter__value {
+    margin: 4px 0;
+}

@@ -1,0 +1,13 @@
+.request-state {
+    padding: 16px;
+    margin: 16px 0;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px dashed var(--border-color);
+    background: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.request-state--error {
+    border-color: var(--danger-color);
+}
