@@ -9,10 +9,7 @@ interface Settled<T, P> {
     error: string | null;
 }
 
-export function useFetch<T, P>(
-    fetcher: (params: P, signal: AbortSignal) => Promise<T>,
-    params: P,
-): AsyncState<T> & { reload: () => void } {
+export function useFetch<T, P>(fetcher: (params: P, signal: AbortSignal) => Promise<T>, params: P,): AsyncState<T> & { reload: () => void } {
     const [settled, setSettled] = useState<Settled<T, P> | null>(null);
     const [reloadKey, setReloadKey] = useState(0);
 

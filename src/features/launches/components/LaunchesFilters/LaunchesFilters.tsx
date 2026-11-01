@@ -1,18 +1,15 @@
-import { Controller, type Control } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import Button from "../../../../shared/components/ui/Button/Button.tsx";
 import Counter from "../../../../shared/components/ui/Counter/Counter.tsx";
 import SearchInput from "../../../../shared/components/ui/SearchInput/SearchInput.tsx";
 import StatusFilter from "../StatusFilter/StatusFilter.tsx";
+import { useLaunchFiltersContext } from "../../hooks/UseLaunchFiltersContext.ts";
 import { DEFAULT_FILTERS, LIMIT_MAX, LIMIT_MIN, LIMIT_STEP } from "../../Constants.ts";
-import type { LaunchFilters } from "../../Types.ts";
 import "./LaunchesFilters.css";
 
-interface LaunchesFiltersProps {
-    control: Control<LaunchFilters>;
-    onReset: () => void;
-}
+export default function LaunchesFilters() {
+    const { control, resetFilters } = useLaunchFiltersContext();
 
-export default function LaunchesFilters({ control, onReset }: LaunchesFiltersProps) {
     return (
         <form className="launches-filters" onSubmit={(e) => e.preventDefault()}>
             <Controller
@@ -49,7 +46,7 @@ export default function LaunchesFilters({ control, onReset }: LaunchesFiltersPro
                     />
                 )}
             />
-            <Button onClick={onReset}>Скинути фільтри</Button>
+            <Button onClick={resetFilters}>Скинути фільтри</Button>
         </form>
     );
 }

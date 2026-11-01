@@ -14,3 +14,19 @@
     padding: 6px;
     border-bottom: 1px solid var(--border-color);
 }
+.launches-table__row {
+    cursor: pointer;
+}
+
+.launches-table__row:hover {
+    background: var(--secondary-hover);
+}
+
+.launches-table__link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.launches-table__link:hover {
+    text-decoration: underline;
+}
