@@ -34,3 +34,14 @@ export interface LaunchKpis {
     year: number;
     yearCount: number;
 }
+export interface LaunchDetails extends Launch {
+    statusName: string;
+    statusDescription: string | null;
+    missionType: string | null;
+    missionDescription: string | null;
+    orbit: string | null;
+    location: string;
+    windowStart: string;
+    windowEnd: string;
+    image: string | null;
+}
