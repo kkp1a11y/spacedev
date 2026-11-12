@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
 import { formatDateTime } from "../../../../shared/utils/FormatDate.ts";
 import type { Launch, Sort, SortKey } from "../../Types.ts";
 import SortHeader from "../SortHeader/SortHeader.tsx";
@@ -29,20 +29,8 @@ export default function LaunchesTable({ launches, sort, onSort }: LaunchesTableP
                 </thead>
                 <tbody>
                 {launches.map((l) => (
-                    <tr
-                        key={l.id}
-                        className="launches-table__row"
-                        onClick={() => navigate(`/launch/${l.id}`)}
-                    >
-                        <td className="launches-table__td">
-                            <Link
-                                className="launches-table__link"
-                                to={`/launch/${l.id}`}
-                                onClick={(e) => e.stopPropagation()}
-                            >
-                                {l.name}
-                            </Link>
-                        </td>
+                    <tr key={l.id} className="launches-table__row" onClick={() => navigate(`/launch/${l.id}`)}>
+                        <td className="launches-table__td">{l.name}</td>
                         <td className="launches-table__td">{l.agency}</td>
                         <td className="launches-table__td">{l.rocket}</td>
                         <td className="launches-table__td">{l.pad}</td>

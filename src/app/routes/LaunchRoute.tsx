@@ -1,10 +1,15 @@
-import { Link, useParams } from "react-router";
+import { Link, Navigate, useParams } from "react-router";
 import Button from "../../shared/components/ui/Button/Button.tsx";
 import LaunchDetails from "../../features/launches/components/LaunchDetails/LaunchDetails.tsx";
 import { useLaunchDetails } from "../../features/launches/hooks/UseLaunchDetails.ts";
 
 export default function LaunchRoute() {
-    const { id = "" } = useParams<{ id: string }>();
+    const { id } = useParams<{ id: string }>();
+    if (!id) return <Navigate to="/" replace />;
+    return <LaunchPage id={id} />;
+}
+
+function LaunchPage({ id }: { id: string }) {
     const { launch, loading, error, notFound, reload } = useLaunchDetails(id);
 
     return (
