@@ -1,22 +1,32 @@
-import { useMemo, useState } from "react";
-import { ALL_AGENCIES, DEFAULT_SORT } from "../Constants.ts";
-import { filterLaunchesByAgency, getAgencies } from "../services/LaunchesFilters.ts";
-import { getNextSort, sortLaunches } from "../services/LaunchesSort.ts";
-import type { Launch, Sort, SortKey } from "../Types.ts";
+import { useMemo } from "react";
+import { useAppStore } from "../../../app/store/UseAppStore.ts";
+import {
+    filterLaunchesByAgency,
+    getAgencies,
+} from "../services/LaunchesFilters.ts";
+import { sortLaunches } from "../services/LaunchesSort.ts";
+import type { Launch } from "../Types.ts";
 
 export function useLaunchesTable(launches: Launch[]) {
-    const [agency, setAgency] = useState(ALL_AGENCIES);
-    const [sort, setSort] = useState<Sort>(DEFAULT_SORT);
+    const agency = useAppStore((state) => state.agency);
+    const sort = useAppStore((state) => state.sort);
+    const favoriteIds = useAppStore((state) => state.favoriteIds);
+    const onlyFavorites = useAppStore((state) => state.onlyFavorites);
 
-    const agencies = useMemo(() => getAgencies(launches), [launches]);
-    const activeAgency = agencies.includes(agency) ? agency : ALL_AGENCIES;
-
-    const rows = useMemo(
-        () => sortLaunches(filterLaunchesByAgency(launches, activeAgency), sort),
-        [launches, activeAgency, sort],
+    const agencies = useMemo(
+        () => getAgencies(launches),
+        [launches],
     );
 
-    const toggleSort = (key: SortKey) => setSort((prev) => getNextSort(prev, key));
+    const rows = useMemo(() => {
+        const filtered = filterLaunchesByAgency(launches, agency);
 
-    return { agencies, agency: activeAgency, setAgency, sort, rows, toggleSort };
+        const visible = onlyFavorites
+            ? filtered.filter((launch) => favoriteIds.includes(launch.id))
+            : filtered;
+
+        return sortLaunches(visible, sort);
+    }, [launches, agency, sort, favoriteIds, onlyFavorites]);
+
+    return { agencies, rows };
 }
