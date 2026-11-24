@@ -28,8 +28,8 @@ export default function DashboardRoute() {
     const table = useLaunchesTable(launches);
 
     return (
-        <>
-            <section className="section">
+        <div className="dashboard">
+            <section className="section dashboard__filters">
                 <h3>Фільтри</h3>
                 <LaunchesFilters />
             </section>
@@ -40,7 +40,7 @@ export default function DashboardRoute() {
                 isEmpty={false}
                 onRetry={reload}
             >
-                <section className="section">
+                <section className="section dashboard__kpis">
                     <h3>Ключові показники</h3>
 
                     <div className="kpi-grid">
@@ -64,7 +64,7 @@ export default function DashboardRoute() {
                     </div>
                 </section>
 
-                <section className="section">
+                <section className="section dashboard__launches">
                     <h3>Місії</h3>
 
                     <AgencyFilter agencies={table.agencies} />
@@ -78,8 +78,10 @@ export default function DashboardRoute() {
                     )}
                 </section>
 
-                <LaunchesChart launches={table.rows} />
+                <div className="dashboard__statistics">
+                    <LaunchesChart launches={table.rows} />
+                </div>
             </RequestState>
-        </>
+        </div>
     );
 }

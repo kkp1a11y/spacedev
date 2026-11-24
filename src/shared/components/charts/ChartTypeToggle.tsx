@@ -6,10 +6,7 @@ interface ChartTypeToggleProps {
     onChange: (type: ChartType) => void;
 }
 
-export default function ChartTypeToggle({
-                                            value,
-                                            onChange,
-                                        }: ChartTypeToggleProps) {
+export default function ChartTypeToggle({ value,onChange,}: ChartTypeToggleProps) {
     return (
         <div
             className="chart-toggle"
