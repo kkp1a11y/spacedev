@@ -1,6 +1,7 @@
 import { formatDateTime } from "../../../../shared/utils/FormatDate.ts";
 import type { LaunchDetails as LaunchDetailsData } from "../../Types.ts";
 import "./LaunchDetails.css";
+import FavoriteButton from "../../../favorites/components/FavoriteButton/FavoriteButton.tsx";
 
 export default function LaunchDetails({ launch }: { launch: LaunchDetailsData }) {
     const rows: [string, string][] = [
@@ -18,6 +19,7 @@ export default function LaunchDetails({ launch }: { launch: LaunchDetailsData })
     return (
         <article className="launch-details">
             <h2>{launch.name}</h2>
+            <FavoriteButton id={launch.id} name={launch.name} />
             {launch.image && (
                 <img className="launch-details__image" src={launch.image} alt={launch.name} />
             )}
