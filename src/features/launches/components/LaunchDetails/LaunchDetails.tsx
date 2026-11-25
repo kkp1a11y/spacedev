@@ -1,7 +1,9 @@
 import { formatDateTime } from "../../../../shared/utils/FormatDate.ts";
 import type { LaunchDetails as LaunchDetailsData } from "../../Types.ts";
-import "./LaunchDetails.css";
 import FavoriteButton from "../../../favorites/components/FavoriteButton/FavoriteButton.tsx";
+import { Card } from "../../../../shared/ui/molecules/Card/Card.tsx";
+import { Table } from "../../../../shared/ui/organisms/Table/Table.tsx";
+import { TableRow } from "../../../../shared/ui/molecules/TableRow/TableRow.tsx";
 
 export default function LaunchDetails({ launch }: { launch: LaunchDetailsData }) {
     const rows: [string, string][] = [
@@ -17,22 +19,44 @@ export default function LaunchDetails({ launch }: { launch: LaunchDetailsData })
     ];
 
     return (
-        <article className="launch-details">
-            <h2>{launch.name}</h2>
-            <FavoriteButton id={launch.id} name={launch.name} />
-            {launch.image && (
-                <img className="launch-details__image" src={launch.image} alt={launch.name} />
-            )}
-            <dl className="launch-details__list">
-                {rows.map(([term, value]) => (
-                    <div key={term} className="launch-details__row">
-                        <dt>{term}</dt>
-                        <dd>{value}</dd>
-                    </div>
-                ))}
-            </dl>
-            {launch.statusDescription && <p>{launch.statusDescription}</p>}
-            {launch.missionDescription && <p>{launch.missionDescription}</p>}
-        </article>
+        <Card title={launch.name}>
+            <div className="ds-stack">
+                <div>
+                    <FavoriteButton id={launch.id} name={launch.name} />
+                </div>
+
+                {launch.image && (
+                    <img
+                        className="launch-details__image"
+                        src={launch.image}
+                        alt={launch.name}
+                    />
+                )}
+
+                <Table
+                    compact
+                    label="Характеристики запуску"
+                    columns={[
+                        { label: "Поле" },
+                        { label: "Значення" },
+                    ]}
+                >
+                    {rows.map(([label, value]) => (
+                        <TableRow
+                            key={label}
+                            cells={[label, value]}
+                        />
+                    ))}
+                </Table>
+
+                {launch.statusDescription && (
+                    <p>{launch.statusDescription}</p>
+                )}
+
+                {launch.missionDescription && (
+                    <p>{launch.missionDescription}</p>
+                )}
+            </div>
+        </Card>
     );
 }

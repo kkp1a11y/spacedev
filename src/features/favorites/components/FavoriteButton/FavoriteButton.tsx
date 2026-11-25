@@ -1,5 +1,5 @@
 import { useAppStore } from "../../../../app/store/UseAppStore.ts";
-import Button from "../../../../shared/components/ui/Button/Button.tsx";
+import { Button } from "../../../../shared/ui/atoms/Button/Button.tsx";
 
 interface FavoriteButtonProps {
     id: string;
@@ -15,6 +15,8 @@ export default function FavoriteButton({ id, name }: FavoriteButtonProps) {
 
     return (
         <Button
+            size="sm"
+            variant={isFavorite ? "primary" : "secondary"}
             aria-pressed={isFavorite}
             aria-label={`${
                 isFavorite ? "Видалити з обраного" : "Додати в обране"

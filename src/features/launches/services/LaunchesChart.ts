@@ -1,5 +1,4 @@
-import type { ChartPoint } from "../../../shared/components/charts/Types.ts";
-import type { Launch } from "../Types.ts";
+import type { ChartPoint } from "../../../shared/ui/organisms/DataChart/DataChart.types.ts";import type { Launch } from "../Types.ts";
 
 export function groupLaunchesByAgency(launches: Launch[]): ChartPoint[] {
     const counts = new Map<string, number>();

@@ -1,13 +1,14 @@
 import { useMemo } from "react";
 import { useAppStore } from "../../../../app/store/UseAppStore.ts";
-import DataChart from "../../../../shared/components/charts/DataChart.tsx";
-import ChartTypeToggle from "../../../../shared/components/charts/ChartTypeToggle.tsx";
+import { Button } from "../../../../shared/ui/atoms/Button/Button.tsx";
+import { Card } from "../../../../shared/ui/molecules/Card/Card.tsx";
+import { DataChart } from "../../../../shared/ui/organisms/DataChart/DataChart.tsx";
 import { groupLaunchesByAgency } from "../../services/LaunchesChart.ts";
 import type { Launch } from "../../Types.ts";
 
 export default function LaunchesChart({ launches }: { launches: Launch[] }) {
-    const type = useAppStore((state) => state.chartType);
-    const setType = useAppStore((state) => state.setChartType);
+    const type = useAppStore((s) => s.chartType);
+    const setType = useAppStore((s) => s.setChartType);
 
     const data = useMemo(
         () => groupLaunchesByAgency(launches),
@@ -15,18 +16,44 @@ export default function LaunchesChart({ launches }: { launches: Launch[] }) {
     );
 
     return (
-        <section className="section">
-            <h3>Розподіл запусків за агенціями</h3>
+        <Card title="Розподіл запусків за агенціями">
+            <div className="ds-stack">
+                <div
+                    className="ds-actions"
+                    role="group"
+                    aria-label="Тип графіка"
+                >
+                    <Button
+                        size="sm"
+                        variant={type === "bar" ? "primary" : "secondary"}
+                        aria-pressed={type === "bar"}
+                        onClick={() => setType("bar")}
+                    >
+                        Стовпчиковий
+                    </Button>
 
-            <ChartTypeToggle value={type} onChange={setType} />
+                    <Button
+                        size="sm"
+                        variant={type === "pie" ? "primary" : "secondary"}
+                        aria-pressed={type === "pie"}
+                        onClick={() => setType("pie")}
+                    >
+                        Круговий
+                    </Button>
+                </div>
 
-            <p className="chart-note">
-                Показано {launches.length} місій із поточної таблиці
-                за активними фільтрами. Це вибірка, обмежена лімітом
-                результатів.
-            </p>
+                <p className="ds-muted">
+                    Показано {launches.length} місій із поточної таблиці.
+                    Вибірка обмежена активними фільтрами та лімітом.
+                </p>
 
-            <DataChart data={data} type={type} />
-        </section>
+                <DataChart
+                    data={data}
+                    type={type}
+                    seriesName="Кількість запусків"
+                    emptyLabel="Немає запусків за вибраними фільтрами."
+                />
+            </div>
+        </Card>
     );
 }

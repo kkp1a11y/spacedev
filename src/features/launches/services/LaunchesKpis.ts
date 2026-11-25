@@ -13,7 +13,7 @@ export function getLaunchKpis(
     return {
         nextLaunchValue: days === null ? NO_DATA : `Через ${days} дн.`,
         nextLaunchName: nextLaunch?.name,
-        year: new Date(now).getFullYear(),
+        year: new Date(now).getUTCFullYear(),
         yearCount: yearTotal,
     };
 }

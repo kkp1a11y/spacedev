@@ -1,66 +1,35 @@
 import { useNavigate } from "react-router";
 import { formatDateTime } from "../../../../shared/utils/FormatDate.ts";
+import { Badge } from "../../../../shared/ui/atoms/Badge/Badge.tsx";
+import { TableRow } from "../../../../shared/ui/molecules/TableRow/TableRow.tsx";
 import FavoriteButton from "../../../favorites/components/FavoriteButton/FavoriteButton.tsx";
 import type { Launch } from "../../Types.ts";
 
-interface LaunchRowProps {
-    launch: Launch;
-}
-
-export default function LaunchRow({ launch }: LaunchRowProps) {
+export default function LaunchRow({ launch }: { launch: Launch }) {
     const navigate = useNavigate();
 
-    const openDetails = () => {
-        navigate(`/launch/${encodeURIComponent(launch.id)}`);
-    };
+    const tone =
+        launch.status === "Success"
+            ? "success"
+            : ["Failure", "Partial Failure"].includes(launch.status)
+                ? "danger"
+                : "neutral";
 
     return (
-        <tr
-            className="launches-table__row"
-            tabIndex={0}
-            aria-label={`Відкрити запуск: ${launch.name}`}
-            onClick={openDetails}
-            onKeyDown={(event) => {
-                if (event.target !== event.currentTarget) {
-                    return;
-                }
-
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    openDetails();
-                }
-            }}
-        >
-            <td className="launches-table__td">
-                {launch.name}
-            </td>
-
-            <td className="launches-table__td">
-                {launch.agency}
-            </td>
-
-            <td className="launches-table__td">
-                {launch.rocket}
-            </td>
-
-            <td className="launches-table__td">
-                {launch.pad}
-            </td>
-
-            <td className="launches-table__td">
-                {formatDateTime(launch.net)}
-            </td>
-
-            <td className="launches-table__td">
-                {launch.status}
-            </td>
-
-            <td className="launches-table__td">
-                <FavoriteButton
-                    id={launch.id}
-                    name={launch.name}
-                />
-            </td>
-        </tr>
+        <TableRow
+            label={`Відкрити запуск: ${launch.name}`}
+            onActivate={() =>
+                navigate(`/launch/${encodeURIComponent(launch.id)}`)
+            }
+            cells={[
+                launch.name,
+                launch.agency,
+                launch.rocket,
+                launch.pad,
+                formatDateTime(launch.net),
+                <Badge tone={tone}>{launch.status}</Badge>,
+                <FavoriteButton id={launch.id} name={launch.name} />,
+            ]}
+        />
     );
 }

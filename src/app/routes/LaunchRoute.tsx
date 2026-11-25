@@ -1,39 +1,62 @@
-import { Link, Navigate, useParams } from "react-router";
-import Button from "../../shared/components/ui/Button/Button.tsx";
+import { Navigate, useNavigate, useParams } from "react-router";
+import { Button } from "../../shared/ui/atoms/Button/Button.tsx";
+import { Spinner } from "../../shared/ui/atoms/Spinner/Spinner.tsx";
+import { Card } from "../../shared/ui/molecules/Card/Card.tsx";
 import LaunchDetails from "../../features/launches/components/LaunchDetails/LaunchDetails.tsx";
 import { useLaunchDetails } from "../../features/launches/hooks/UseLaunchDetails.ts";
 
 export default function LaunchRoute() {
     const { id } = useParams<{ id: string }>();
-    if (!id) return <Navigate to="/" replace />;
+
+    if (!id) {
+        return <Navigate to="/" replace />;
+    }
+
     return <LaunchPage id={id} />;
 }
 
 function LaunchPage({ id }: { id: string }) {
-    const { launch, loading, error, notFound, reload } = useLaunchDetails(id);
+    const navigate = useNavigate();
+    const { launch, loading, error, notFound, reload } =
+        useLaunchDetails(id);
 
     return (
-        <section className="section">
-            <Link to="/" className="button">← Назад</Link>
+        <div className="ds-stack launch-details">
+            <div>
+                <Button
+                    variant="secondary"
+                    onClick={() => navigate("/")}
+                >
+                    ← Назад
+                </Button>
+            </div>
 
-            {loading && <p role="status">Завантаження деталей…</p>}
+            {loading && (
+                <Card>
+                    <Spinner label="Завантаження деталей…" />
+                </Card>
+            )}
 
             {error && (
-                <div role="alert">
-                    <h3>Не вдалося завантажити дані</h3>
-                    <p>{error}</p>
-                    <Button onClick={reload}>Спробувати ще раз</Button>
-                </div>
+                <Card title="Не вдалося завантажити дані">
+                    <div className="ds-stack" role="alert">
+                        <p>{error}</p>
+                        <Button onClick={reload}>
+                            Спробувати ще раз
+                        </Button>
+                    </div>
+                </Card>
             )}
 
             {notFound && (
-                <div role="status">
-                    <h3>Запуск не знайдено</h3>
-                    <p>Запуску з ідентифікатором «{id}» не існує.</p>
-                </div>
+                <Card title="Запуск не знайдено">
+                    <p role="status">
+                        Запуску з ідентифікатором «{id}» не існує.
+                    </p>
+                </Card>
             )}
 
             {launch && <LaunchDetails launch={launch} />}
-        </section>
+        </div>
     );
 }
