@@ -1,10 +1,15 @@
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { Button } from "../../shared/ui/atoms/Button/Button.tsx";
+import { Card } from "../../shared/ui/molecules/Card/Card.tsx";
 
 export default function NotFoundRoute() {
+    const navigate = useNavigate();
+
     return (
-        <section className="section">
-            <h3>Сторінку не знайдено</h3>
-            <Link to="/" className="button">На головну</Link>
-        </section>
+        <Card title="Сторінку не знайдено">
+            <Button onClick={() => navigate("/")}>
+                На головну
+            </Button>
+        </Card>
     );
 }

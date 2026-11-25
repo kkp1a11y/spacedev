@@ -1,41 +1,51 @@
-import Button from "../../../../shared/components/ui/Button/Button.tsx";
-import Counter from "../../../../shared/components/ui/Counter/Counter.tsx";
-import SearchInput from "../../../../shared/components/ui/SearchInput/SearchInput.tsx";
-import StatusFilter from "../StatusFilter/StatusFilter.tsx";
 import { useAppStore } from "../../../../app/store/UseAppStore.ts";
+import { Select } from "../../../../shared/ui/atoms/Select/Select.tsx";
+import { Input } from "../../../../shared/ui/atoms/Input/Input.tsx";
+import { Button } from "../../../../shared/ui/atoms/Button/Button.tsx";
+import { Field } from "../../../../shared/ui/molecules/Field/Field.tsx";
+import { Counter } from "../../../../shared/ui/molecules/Counter/Counter.tsx";
+import { FilterPanel } from "../../../../shared/ui/organisms/FilterPanel/FilterPanel.tsx";
 import {
     DEFAULT_FILTERS,
-    LIMIT_MAX,
     LIMIT_MIN,
+    LIMIT_MAX,
     LIMIT_STEP,
+    STATUS_OPTIONS,
 } from "../../Constants.ts";
-import "./LaunchesFilters.css";
 
 export default function LaunchesFilters() {
-    const filters = useAppStore((state) => state.filters);
-    const setFilters = useAppStore((state) => state.setFilters);
-    const resetFilters = useAppStore((state) => state.resetFilters);
-
-    const onlyFavorites = useAppStore((state) => state.onlyFavorites);
-    const setOnlyFavorites = useAppStore((state) => state.setOnlyFavorites);
-    const favoriteCount = useAppStore((state) => state.favoriteIds.length);
+    const filters = useAppStore((s) => s.filters);
+    const setFilters = useAppStore((s) => s.setFilters);
+    const resetFilters = useAppStore((s) => s.resetFilters);
+    const onlyFavorites = useAppStore((s) => s.onlyFavorites);
+    const setOnlyFavorites = useAppStore((s) => s.setOnlyFavorites);
+    const count = useAppStore((s) => s.favoriteIds.length);
 
     return (
-        <form
-            className="launches-filters"
-            onSubmit={(event) => event.preventDefault()}
-        >
-            <SearchInput
-                label="Пошук за назвою"
-                placeholder="Напр. Starlink"
-                value={filters.search}
-                onChange={(search) => setFilters({ search })}
-            />
+        <FilterPanel>
+            <Field label="Пошук за назвою">
+                <Input
+                    type="search"
+                    placeholder="Напр. Starlink"
+                    value={filters.search}
+                    onChange={(event) =>
+                        setFilters({ search: event.target.value })
+                    }
+                />
+            </Field>
 
-            <StatusFilter
-                value={filters.status}
-                onChange={(status) => setFilters({ status })}
-            />
+            <Field label="Статус">
+                <Select
+                    value={filters.status}
+                    options={[
+                        { value: "", label: "Усі статуси" },
+                        ...STATUS_OPTIONS,
+                    ]}
+                    onChange={(event) =>
+                        setFilters({ status: event.target.value })
+                    }
+                />
+            </Field>
 
             <Counter
                 label="Кількість у таблиці"
@@ -47,20 +57,23 @@ export default function LaunchesFilters() {
                 initial={DEFAULT_FILTERS.limit}
             />
 
-            <label>
-                <input
+            <Field inline label={`Лише обране (${count})`}>
+                <Input
                     type="checkbox"
                     checked={onlyFavorites}
                     onChange={(event) =>
                         setOnlyFavorites(event.target.checked)
                     }
                 />
-                Лише обране ({favoriteCount})
-            </label>
+            </Field>
 
-            <Button onClick={resetFilters}>
+            <Button
+                size="sm"
+                variant="secondary"
+                onClick={resetFilters}
+            >
                 Скинути фільтри
             </Button>
-        </form>
+        </FilterPanel>
     );
 }

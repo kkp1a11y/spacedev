@@ -1,10 +1,10 @@
-import Select from "../../../../shared/components/ui/Select/Select.tsx";
 import { useAppStore } from "../../../../app/store/UseAppStore.ts";
-import "./AgencyFilter.css";
+import { Select } from "../../../../shared/ui/atoms/Select/Select.tsx";
+import {Field} from "../../../../shared/ui/molecules/Field/Field.tsx";
 
 export default function AgencyFilter({ agencies }: { agencies: string[] }) {
-    const agency = useAppStore((state) => state.agency);
-    const setAgency = useAppStore((state) => state.setAgency);
+    const agency = useAppStore((s) => s.agency);
+    const setAgency = useAppStore((s) => s.setAgency);
 
     const values =
         agency && !agencies.includes(agency)
@@ -12,17 +12,18 @@ export default function AgencyFilter({ agencies }: { agencies: string[] }) {
             : agencies;
 
     return (
-        <div className="agency-filter">
+        <Field label="Агенція">
             <Select
-                label="Агенція"
-                allLabel="Усі агенції"
                 value={agency}
-                options={values.map((value) => ({
-                    value,
-                    label: value,
-                }))}
-                onChange={setAgency}
+                onChange={(event) => setAgency(event.target.value)}
+                options={[
+                    { value: "", label: "Усі агенції" },
+                    ...values.map((value) => ({
+                        value,
+                        label: value,
+                    })),
+                ]}
             />
-        </div>
+        </Field>
     );
 }

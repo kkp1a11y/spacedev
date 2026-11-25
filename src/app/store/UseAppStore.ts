@@ -10,8 +10,7 @@ import type {
     Sort,
     SortKey,
 } from "../../features/launches/Types.ts";
-import type { ChartType } from "../../shared/components/charts/Types.ts";
-
+import type { ChartType } from "../../shared/ui/organisms/DataChart/DataChart.types.ts";
 interface AppState {
     isDark: boolean;
     filters: LaunchFilters;
